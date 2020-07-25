@@ -1,0 +1,322 @@
+<div class="card">
+    <div class="card-header">
+        <strong><i class="fa fa-th"></i> INVOICE LISTING - BY PATIENT</strong>
+        <span class="pull-right">
+            <button class="btn btn-dark btn-xs btn-spacing" (click)="selectToday('')">Today</button>
+            <button class="btn btn-dark btn-xs btn-spacing" (click)="selectYesterday()">Yesterday</button>
+            <button class="btn btn-dark btn-xs btn-spacing" (click)="selectCurMonth()">This Month</button>
+            <button class="btn btn-dark btn-xs" (click)="selectPreMonth()">Last Month</button>
+        </span>
+    </div>
+
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">From:</span>
+                    </div>
+                    <input class="form-control" placeholder="DD-MMMM-YYYY" name="dp" [(ngModel)]="modelFr" ngbDatepicker [footerTemplate]="footerTemplate"
+                    (navigate)="date = $event.next"  #d="ngbDatepicker" (click)="d.toggle()" readonly>
+
+                     <ng-template #footerTemplate>
+                        <hr class="my-0">
+                        <button class="btn btn-primary btn-sm m-2 float-left"
+                            (click)="selectToday('from'); d.close()">Today</button>
+                        <button class="btn btn-secondary btn-sm m-2 float-right" (click)="d.close()">Close</button>
+                    </ng-template> 
+
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-default btnCalender" (click)="d.toggle()"
+                            style="border: 1px solid #0003;"><i class="fa fa-calendar"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">To:</span>
+                    </div>
+                    <input class="form-control" placeholder="DD-MMMM-YYYY" name="dpTo" [(ngModel)]="modelTo" ngbDatepicker
+                        [footerTemplate]="footerTemplateTo" #dTo="ngbDatepicker" (click)="dTo.toggle()" readonly>
+
+                    <ng-template #footerTemplateTo>
+                        <hr class="my-0">
+                        <button class="btn btn-primary btn-sm m-2 float-left"
+                            (click)="selectToday('to'); dTo.close()">Today</button>
+                        <button class="btn btn-secondary btn-sm m-2 float-right" (click)="dTo.close()">Close</button>
+                    </ng-template>
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-default btnCalender" (click)="dTo.toggle()"
+                            style="border: 1px solid #0003;"><i class="fa fa-calendar"></i></button>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-sm-4">
+                <button type="button" class="btn btn-primary btn-block">Generate Report</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Location:</span>
+                    </div>
+                    <select class="form-control">
+                        <option value="*">All Locations</option>
+                        <option value="ME">ME</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Provider:</span>
+                    </div>
+                    <select class="form-control">
+                        <option value="*">All Providers</option>
+                        <option value="DrTan">DrTan - Dr Kenny
+                            Tan</option>
+                        <option value="DrLee">DrLee - Dr Eric Lee
+                        </option>
+                    </select>
+                </div>
+            </div> 
+            <div class="col-sm-4">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-default btn-spacing gray-border" (click)="exportAsXLSX()"><i
+                            class="fa fa-file-excel-o"></i>
+                        Excel</button>
+                    <button type="button" class="btn btn-default gray-border" (click)="printAll()"><i
+                            class="fa fa-print"></i>
+                        Print</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <br><br>
+            <div id="table">
+                <table class="table table-bordered table-striped table-responsive" id="printInv">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div>Date
+                                    <div class="arrow-group">
+                                        <i class="fa fa-angle-up arrow-up" (click)="sortByAsce('Date')"></i>
+                                        <i class="fa fa-angle-down arrow-down" (click)="sortByDesc('Date')"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div>Invoice No
+                                    <div class="arrow-group">
+                                        <i class="fa fa-angle-up arrow-up" (click)="sortByAsce('InvoiceNo')"></i>
+                                        <i class="fa fa-angle-down arrow-down" (click)="sortByDesc('InvoiceNo')"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div>Patient</div>
+                            </th>
+
+                            <th>
+                                <div>Sub-Total(RM)
+                                </div>
+                            </th>
+
+                            <th>
+                                <div>GST(RM)</div>
+                            </th>
+                            <th>
+                                <div>Adj(RM)</div>
+                            </th>
+                            <th>
+                                <div>Total(RM)
+                                    <div class="arrow-group">
+                                        <i class="fa fa-angle-up arrow-up" (click)="sortByAsce('Total')"></i>
+                                        <i class="fa fa-angle-down arrow-down" (click)="sortByDesc('Total')"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div>Payment(RM)
+                                    <div class="arrow-group">
+                                        <i class="fa fa-angle-up arrow-up" (click)="sortByAsce('Payment')"></i>
+                                        <i class="fa fa-angle-down arrow-down" (click)="sortByDesc('Payment')"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div>Corp Invoiced(RM)</div>
+                            </th>
+                            <th>
+                                <div>Patient Outstanding(RM)
+                                    <div class="arrow-group">
+                                        <i class="fa fa-angle-up arrow-up" (click)="sortByAsce('PatientOutstanding')"></i>
+                                        <i class="fa fa-angle-down arrow-down" (click)="sortByDesc('PatientOutstanding')"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div>Mode</div>
+                            </th>
+                            <th>
+                                <div>Corp</div>
+                            </th>
+                            <th>
+                                <div>Location
+                                    <div class="arrow-group">
+                                        <i class="fa fa-angle-up arrow-up" (click)="sortByAsce('Location')"></i>
+                                        <i class="fa fa-angle-down arrow-down" (click)="sortByDesc('Location')"></i>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div>Active
+                                </div>
+                            </th>
+                            <th>
+                                <div>print invoice
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let in of invoices">
+                            <td>{{in.Date}}</td>
+                            <td>{{in.InvoiceNo}}</td>
+                            <td>
+                                <span>
+                                    <a routerLink='/patients/{{in.PatientId}}/details/visits' style="color: #000">
+                                        <span>{{in.PatientId}}</span> - <span>{{in.PatientName | titlecase}}</span></a>
+                                </span>
+                            </td>
+
+                            <td>
+                                {{in.SubTotal}}
+                            </td>
+
+                            <td>
+                                {{in.GST}}
+                            </td>
+
+                            <td>{{in.Adj}}</td>
+                            <td>{{in.Total}}</td>
+                            <td>{{in.Payment}}</td>
+                            <td>{{in.CorpInvoiced}}</td>
+                            <td>({{in.PatientOutstanding}})</td>
+                            <td>{{in.Mode}}</td>
+                            <td>{{in.Corp}}</td>
+                            <td>{{in.Location}}</td>
+                            <td></td>
+                            <td><i class="fa fa-print" (click)="printIndividual(in)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+
+                            <th>
+                                <div>639.28</div>
+                            </th>
+
+                            <th>
+                                <div>37.74</div>
+                            </th>
+
+                            <th>
+                                <div>0.02</div>
+                            </th>
+                            <th>
+                                <div>677.00</div>
+                            </th>
+                            <th>
+                                <div>187.00</div>
+                            </th>
+                            <th>
+                                <div></div>
+                            </th>
+                            <th>
+                                <div>7.00</div>
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Total Invoice
+                                <span>(incl
+                                    GST)(RM)</span>
+                            </td>
+                            <td>677.00</td>
+                        </tr>
+
+                        <tr>
+                            <td>Total GST(RM)</td>
+                            <td>37.74</td>
+                        </tr>
+                        <tr>
+                            <td>Total Payments(RM)</td>
+                            <td>187.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <b>Payments for Past Invoices</b>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div>Payment Date</div>
+                            </th>
+                            <th>
+                                <div>Invoice Date</div>
+                            </th>
+                            <th>
+                                <div>#</div>
+                            </th>
+                            <th>
+                                <div>Patient</div>
+                            </th>
+                            <th>
+                                <div>Payment(RM)</div>
+                            </th>
+                            <th>
+                                <div>Mode</div>
+                            </th>
+                            <th>
+                                <div>Location</div>
+                            </th>
+                            <th>
+                                <div>Provider</div>
+                            </th>
+                            <th>
+                                <div>Ref</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="invoice-print" style="display: none;">
+            <div *ngFor="let each of printInvoice">
+                <app-print-invoice [invoice]="each"></app-print-invoice>
+            </div>
+        </div>
+
+    </div>
+</div>

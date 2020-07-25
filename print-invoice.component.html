@@ -1,0 +1,145 @@
+
+<div class="invoice-inner report_print" style="border: 0.5px solid rgba(0,0,0,0);position: relative; page-break-before: always;">
+    <style>
+        @media screen {
+  .print-header {
+    display: none !important;
+  }
+}
+    </style>
+    <div class="print-header">
+        <div class="row ">
+            <div class="col-md-9">
+                <p style="font-size:1.2em; font-weight:bold;"  >RenalTeam </p>
+                <p>
+                    <span>RenalTeam Dialysis Sdn Bhd
+                    <br></span>
+                    <span>RenalTeam Dialysis Centre (Keningau)<br></span>
+                    <span>Lot 29 ,30 & 31 Apollo Atrium Keningau<br></span>
+                    <span>Jalan Bariawa Laut, Kampung Bariawa<br></span> 
+                </p>
+            </div>
+            <div class="col-md-3 text-right  small">
+                <div class="row">
+                    <div class="col-sm">
+                        Tel No :
+                    </div>
+                    <div class="col-sm">
+                        08 733 6773 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        Fax No :
+                    </div>
+                    <div class="col-sm">
+                        08 733 6772
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm">
+                        Co. Reg. No :
+                    </div>
+                    <div class="col-sm">
+                        201201024820
+                    </div>
+                </div>
+            </div>
+            <hr class="hr-dark">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <p>
+                <b>Bill To</b><br>
+                <span> {{invoice.name}} <br></span> 
+                <span>25 Bukit Batok Crescent <br></span>
+                <span> #07-09/10/11/12/13 <br></span>
+                <span> The Elitist  Singapore 658066 </span>
+            </p>
+        </div>
+        <div class="col-md-3 text-right">
+            <div class="row">
+                <div class="col-sm">
+                    <b>  Invoice :</b>
+                </div>
+                <div class="col-sm">
+                    <b>  # {{invoice.inNo}}  </b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Date :
+                </div>
+                <div class="col-sm">
+                    {{invoice.date}} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    Ref No :
+                </div>
+                <div class="col-sm">
+                    00014 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-sm table-striped table-less-padding" >
+                <tbody>
+                    <tr style="cursor: default;">
+                        <th>No</th>
+                        <th>Description</th>
+                        <th class="text-center">Quantity</th>
+                        <th class="text-right">Unit Price (MYR)</th>
+                        <th class="text-center">Amount (MYR)</th>
+                    </tr>
+                    <tr >
+                        <td>1</td>
+                        <td>Basic HD Reuse</td>
+                        <td class="text-right">1</td>
+                        <td class="text-right">200.00</td>
+                        <td class="text-right">200.00</td>
+                    </tr>
+                    <tr >
+                        <td>2</td>
+                        <td>MIRCERA 75 mcg</td>
+                        <td class="text-right">1</td>
+                        <td class="text-right">600.00</td>
+                        <td class="text-right">600.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <th class="text-right">Total Charges</th>
+                        <th class="text-right">800.00</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <th class="text-right">Payment Amount</th>
+                        <th class="text-right">800.00</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3"></td>
+                        <th class="text-right">Total Amount</th>
+                        <th class="text-right">0.00</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <footer class="fixed-bottom print-footer">
+        <div class="row" >
+            <div class="col-md-9">
+                <span> All cheque should be crossed and made payable to "RENALTEAM DIALYSIS SDN BHD" </span> <br>
+                <span> Please quote your bill number on the reverse of the cheque</span><br>
+                <span>This is a computer generated report, no signature is required </span>
+            </div>
+            <div class="col-md-3">
+                Printed By : IT on 15/07/2020 11.43 AM
+            </div>
+        </div>
+    </footer>
+</div>
